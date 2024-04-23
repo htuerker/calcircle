@@ -17,16 +17,18 @@ export default function Navbar({
     <Disclosure as="nav" className="bg-white shadow">
       {({ open }) => (
         <>
-          <div className="mx-auto max-w-3xl px-2 sm:px-0">
+          <div className="mx-auto max-w-xl px-2 sm:px-0">
             <div className="flex h-16 justify-between">
               <div className="flex justify-between">
                 <div className="flex flex-shrink-0 items-center"></div>
                 <div className="hidden items-center gap-4 lg:flex">
                   <Link href="/auth/login">
-                    <Button variant="link">My Circle</Button>
+                    <Button variant="link" className="pl-0">
+                      Circle
+                    </Button>
                   </Link>
-                  <Link href="/member/new">
-                    <Button variant="link">Add New Member</Button>
+                  <Link href="/me/calendars">
+                    <Button variant="link">Calendars</Button>
                   </Link>
                 </div>
               </div>
@@ -62,6 +64,7 @@ export default function Navbar({
                           <span className="absolute -inset-1.5" />
                           <span className="sr-only">Open user menu</span>
                           <div>{user.name}</div>
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
                           <img
                             className="h-8 w-8 rounded-full"
                             src={user.image ?? ""}

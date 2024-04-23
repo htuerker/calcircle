@@ -31,7 +31,7 @@ export default function NewCalendar() {
   const verifiedUser = isVerified && verifyState.data;
 
   return (
-    <div className="mx-auto mt-6 max-w-lg">
+    <div className="">
       {!isVerified && (
         <form action={verifyAccessTokenAction} className="space-y-2">
           <div className="flex items-end gap-4">
@@ -81,7 +81,11 @@ export default function NewCalendar() {
           </div>
           <form action={createUserCalendar} className="flex items-center">
             <Input type="hidden" name="userId" value={verifiedUser.userId} />
-            <Input type="hidden" name="username" value={verifiedUser.username} />
+            <Input
+              type="hidden"
+              name="username"
+              value={verifiedUser.username}
+            />
             <Input type="hidden" name="name" value={verifiedUser.name} />
             <Input type="hidden" name="bio" value={verifiedUser.bio ?? ""} />
             <Input type="hidden" name="image" value={verifiedUser.avatar} />

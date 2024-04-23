@@ -2,41 +2,41 @@
 
 import { getServerAuthSession } from "@/server/auth";
 import { db } from "@/server/db";
-import { redirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 
 export const deleteCalendar = async (formData: FormData) => {
-  const accessToken = formData.get("accessToken")?.toString();
-  const username = formData.get("username")?.toString();
-  const name = formData.get("name")?.toString();
-  const bio = formData.get("bio")?.toString();
-  const image = formData.get("image")?.toString();
-
-  if (!accessToken || !username || !name) {
-    return { error: "All fields are required" };
+  const calendarId = formData.get("calendarId")?.toString();
+  if (!calendarId) {
+    throw new Error("Invalid calendar ID");
   }
+
   const session = await getServerAuthSession();
 
   if (!session?.user) {
     return redirect("/auth/login");
   }
 
-  try {
-    await db.calendar.create({
-      data: {
-        accessToken,
-        username,
-        name,
-        bio,
-        image,
-        provider: "cal",
-        owner: {
-          connect: {
-            id: session.user.id,
-          }
-        }
+  const calendar = await db.calendar.findFirst({
+    where: {
+      id: calendarId,
+      owner: {
+        id: session.user.id,
       },
-      select: {
-        id: true
+    },
+  });
+
+  if (!calendar) {
+    return redirect(notFound());
+  }
+
+  if (calendar.ownerId !== session.user.id) {
+    return redirect(notFound());
+  }
+
+  try {
+    await db.calendar.delete({
+      where: {
+        id: calendarId
       }
     });
   } catch (e) {

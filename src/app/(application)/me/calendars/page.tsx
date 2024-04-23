@@ -4,6 +4,7 @@ import { db } from "@/server/db";
 import { deleteCalendar } from "./actions";
 import { Input } from "@/components/ui/input";
 import { SubmitButton } from "@/components/submit-button";
+import Link from "next/link";
 
 export default async function Calendars() {
   const user = await getCurrentUser();
@@ -24,7 +25,20 @@ export default async function Calendars() {
 
   return (
     <div className="">
-      <h2 className="my-2 text-xl">Calendars</h2>
+      <div className="relative my-4">
+        <div className="absolute inset-0 flex items-center" aria-hidden="true">
+          <div className="w-full border-t border-gray-300" />
+        </div>
+        <div className="relative flex items-center justify-between">
+          <span className="bg-white pr-3 text-xl leading-6 ">My Calendars</span>
+          <span className="bg-white pl-3">
+            <Button>
+              <Link href="/me/calendars/new">Add New Calendar</Link>
+            </Button>
+          </span>
+        </div>
+      </div>
+
       <ul>
         {calendars.map((calendar) => (
           <li key={calendar.id} className="items-between flex w-full gap-x-4">
@@ -52,8 +66,12 @@ export default async function Calendars() {
               </Button>
             </div>
             <form action={deleteCalendar} className="flex items-center">
-              <Input type="hidden" name="userId" value={calendar.id} />
-              <SubmitButton type="submit" className="w-32 max-w-32">
+              <Input type="hidden" name="calendarId" value={calendar.id} />
+              <SubmitButton
+                type="submit"
+                className="w-32 max-w-32"
+                variant="secondary"
+              >
                 Delete Calendar
               </SubmitButton>
             </form>
