@@ -6,7 +6,7 @@ import { signIn } from "next-auth/react";
 import GoogleIcon from "./svg/google-icon";
 import { Button } from "./ui/button";
 
-export default function () {
+export default function SignInWithGoogleButton() {
   return (
     <Button
       variant={"secondary"}

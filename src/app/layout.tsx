@@ -23,8 +23,6 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await getServerSession(authOptions);
-
   return (
     <html lang="en" suppressHydrationWarning className="h-full">
       <head />
@@ -34,8 +32,7 @@ export default async function RootLayout({
           fontSans.variable,
         )}
       >
-        <Navbar user={session?.user} />
-        <main className="px-4">{children}</main>
+        <main>{children}</main>
       </body>
     </html>
   );

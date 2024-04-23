@@ -10,8 +10,6 @@ import SignInWithGoogleButton from "@/components/sign-in-with-google-button";
 export default async function Login() {
   const session = await getServerSession(authOptions);
 
-  console.log(session);
-
   if (session) {
     return redirect("/");
   }
